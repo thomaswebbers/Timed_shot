@@ -1,0 +1,33 @@
+{
+  "manifest_version": 2,
+  "name": "Timed shot",
+  "description": "This application makes a screenshot with a timestamp",
+  "version": "1.0",
+  "homepage_url": "https://github.com/mdn/webextensions-examples/tree/master/notify-link-clicks-i18n",
+  "icons": {
+    "48": "icons/timed_shot-48.png"
+  },
+
+  "permissions": ["notifications", "*://*.localhost/*"],
+
+
+  "background": {
+    "scripts": ["background-script.js"]
+  },
+
+  "commands": {
+    "Activate-extension": {
+      "suggested_key": { "default": "Ctrl+Shift+E" },
+      "description": "Send a 'Activate extension' event to the extension"
+    }
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-script.js"]
+    }
+  ],
+
+  "default_locale": "en"
+}
