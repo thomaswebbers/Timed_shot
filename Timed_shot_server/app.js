@@ -6,12 +6,13 @@ const morgan = require('morgan')
 const mysql = require('mysql2')
 const cors = require('cors')
 
-app.use(express.json({limit: "1mb"}))
+app.use(express.json({limit: "16mb"}))
 
 //TODO change this for actual application (can only be solved once in the extension)
 
 app.use(cors())
 
+//TODO add back in later when extension ready to ship
 /*app.use(
 	cors ({
 		//origin: "null",
@@ -30,6 +31,9 @@ app.use(morgan('short'))
 
 app.use(express.static('./public'))
 
+
+//============= API CALLS ===============
+
 const timed_shots_database = "timed_shots"
 
 function getConnection() 
@@ -41,9 +45,6 @@ function getConnection()
 	})
 }
 
-
-//============= API CALLS ===============
-
 app.get("/", (req, res) => {
 	//console.log("responding to root route")
 	console.log("Received GET request on root, nothing to be send")
@@ -53,6 +54,7 @@ app.get("/", (req, res) => {
 	})
 })
 
+//TODO broken path fix later
 app.get("/timed_shots", (req, res) => {
 	console.log("Received GET request for ALL users")
 
@@ -86,13 +88,15 @@ app.post("/timed_shot_create", (req, res) => {
 	console.log(data);
 
 	const timeStamp = data.time_stamp
+	const imageEncoded = data.image64
 	//TODO add screenshot and Description text maybe??
 	//const lastName = data.last_name
 
 	console.log(timeStamp);
+	console.log(imageEncoded);
 
-	const queryString = "INSERT INTO " + timed_shots_database + " (time_stamp) VALUES (?)"
-	getConnection().query(queryString, [timeStamp], (err, results, fields) => {
+	const queryString = "INSERT INTO " + timed_shots_database + " (time_stamp, image64) VALUES (?, ?)"
+	getConnection().query(queryString, [timeStamp, imageEncoded], (err, results, fields) => {
 		if (err) {
 			console.log("Failed to insert new user: " + err)
 			res.sendStatus(500)
@@ -105,7 +109,8 @@ app.post("/timed_shot_create", (req, res) => {
 
 		res.json({
 			status: "Success!!!",
-			time_stamp: timeStamp
+			time_stamp: timeStamp,
+			base64: imageEncoded
 		})
 	
 		/*
@@ -121,5 +126,5 @@ app.post("/timed_shot_create", (req, res) => {
 })
 
 app.listen(3003, () => {
-	console.log("Server is up and listening on 3003...")
+	console.log("Timed shot app server is up and listening on 3003...")
 })

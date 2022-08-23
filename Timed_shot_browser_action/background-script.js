@@ -74,14 +74,21 @@ browser.commands.onCommand.addListener(async (command) => {
 
 
 		let response = await browser.tabs.sendMessage(tab.id, {
-			command: "activate_screenshot_script"
+			command: "activate_screenshot_script in background"
 		});
 
 		console.log("Message from the content script:");
-		console.log(response.response);
-		let time_stamp = response.response;
+		//TODO dissect response into needed elements
+		console.log(response.time_stamp);
+		console.log(response.base64);
 
-		let json_response_data = {time_stamp}
+		//TODO make these two lets into 1
+		//TODO add pic data
+		let time_stamp = response.time_stamp;
+		let image64 = response.image64;
+
+
+		let json_response_data = {time_stamp, image64}
 		
 		let post_options = {
 			method: 'POST',
