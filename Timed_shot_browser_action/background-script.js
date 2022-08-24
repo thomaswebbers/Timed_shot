@@ -81,14 +81,17 @@ browser.commands.onCommand.addListener(async (command) => {
 		//TODO dissect response into needed elements
 		console.log(response.time_stamp);
 		console.log(response.base64);
+		//console.log(response.image64);
+		console.log(response.note_text);
 
 		//TODO make these two lets into 1
 		//TODO add pic data
 		let time_stamp = response.time_stamp;
 		let image64 = response.image64;
+		let note_text = response.note_text;
 
 
-		let json_response_data = {time_stamp, image64}
+		let json_response_data = {time_stamp, image64, note_text}
 		
 		let post_options = {
 			method: 'POST',

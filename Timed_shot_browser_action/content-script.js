@@ -51,6 +51,8 @@
 	*/
 	browser.runtime.onMessage.addListener(async (message) => {
 		console.log(message);
+		let note_prompt = prompt("Write note here");
+		//let note_prompt = "Dikke tieten kartoffel salad";
 		let time_stamp;
 		time_stamp = document.querySelector('.ytp-time-display .ytp-time-current');
 	
@@ -69,7 +71,8 @@
 
 		return {
 			time_stamp: time_stamp.textContent,
-			image64: image_html
+			image64: image_html,
+			note_text: note_prompt
 		};
 
 	});

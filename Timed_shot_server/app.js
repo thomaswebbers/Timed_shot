@@ -89,14 +89,17 @@ app.post("/timed_shot_create", (req, res) => {
 
 	const timeStamp = data.time_stamp
 	const imageEncoded = data.image64
+	const noteText = data.note_text;
+	//const noteText = "Ich ni sunshine";
 	//TODO add screenshot and Description text maybe??
 	//const lastName = data.last_name
 
 	console.log(timeStamp);
 	console.log(imageEncoded);
+	console.log(noteText);
 
-	const queryString = "INSERT INTO " + timed_shots_database + " (time_stamp, image64) VALUES (?, ?)"
-	getConnection().query(queryString, [timeStamp, imageEncoded], (err, results, fields) => {
+	const queryString = "INSERT INTO " + timed_shots_database + " (time_stamp, image64, note_text) VALUES (?, ?, ?)"
+	getConnection().query(queryString, [timeStamp, imageEncoded, noteText], (err, results, fields) => {
 		if (err) {
 			console.log("Failed to insert new user: " + err)
 			res.sendStatus(500)
@@ -110,7 +113,8 @@ app.post("/timed_shot_create", (req, res) => {
 		res.json({
 			status: "Success!!!",
 			time_stamp: timeStamp,
-			base64: imageEncoded
+			base64: imageEncoded,
+			note_text: noteText
 		})
 	
 		/*
@@ -121,7 +125,7 @@ app.post("/timed_shot_create", (req, res) => {
 		*/
 
 
-		console.log("Inserted a new user with id: ", results.insertId)
+		console.log("Inserted a new timed shot entry with id:  ", results.insertId)
 	})
 })
 
