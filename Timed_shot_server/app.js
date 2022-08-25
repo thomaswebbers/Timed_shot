@@ -1,4 +1,3 @@
-// load app server using express somehow......
 const express = require('express')
 const res = require('express/lib/response')
 const app = express()
@@ -7,8 +6,6 @@ const mysql = require('mysql2')
 const cors = require('cors')
 
 app.use(express.json({limit: "16mb"}))
-
-//TODO change this for actual application (can only be solved once in the extension)
 
 app.use(cors())
 
@@ -46,7 +43,6 @@ function getConnection()
 }
 
 app.get("/", (req, res) => {
-	//console.log("responding to root route")
 	console.log("Received GET request on root, nothing to be send")
 
 	res.send({
@@ -56,12 +52,12 @@ app.get("/", (req, res) => {
 
 //TODO broken path fix later
 app.get("/timed_shots", (req, res) => {
-	console.log("Received GET request for ALL users")
+	console.log("Received GET request for ALL timed shot entries")
 
 	const queryString = "SELECT * FROM " + timed_shots_database
 	getConnection().query(queryString, (err, rows, fields ) => {
 		if (err) {
-			console.log("Failed to query for all users: " + err)
+			console.log("Failed to query for all entries: " + err)
 			res.sendStatus(500)
 			res.end()
 			return
@@ -76,7 +72,7 @@ app.get("/timed_shots", (req, res) => {
 
 		res.json({
 			status: "Success!!!",
-			users: rows 
+			entries: rows 
 		})
 	})
 })
@@ -90,9 +86,6 @@ app.post("/timed_shot_create", (req, res) => {
 	const timeStamp = data.time_stamp
 	const imageEncoded = data.image64
 	const noteText = data.note_text;
-	//const noteText = "Ich ni sunshine";
-	//TODO add screenshot and Description text maybe??
-	//const lastName = data.last_name
 
 	console.log(timeStamp);
 	console.log(imageEncoded);
@@ -101,14 +94,12 @@ app.post("/timed_shot_create", (req, res) => {
 	const queryString = "INSERT INTO " + timed_shots_database + " (time_stamp, image64, note_text) VALUES (?, ?, ?)"
 	getConnection().query(queryString, [timeStamp, imageEncoded, noteText], (err, results, fields) => {
 		if (err) {
-			console.log("Failed to insert new user: " + err)
+			console.log("Failed to insert a new entry: " + err)
 			res.sendStatus(500)
 			return
 		}
 
-		//Todo change this message when adding more data in body
 		//res.header("Access-Control-Allow-Origin", "moz-extension://d07f1e99-96a0-4934-8ff4-1ce222c06d0d");
-		//res.header("breedbeelld tv");
 
 		res.json({
 			status: "Success!!!",
@@ -117,13 +108,6 @@ app.post("/timed_shot_create", (req, res) => {
 			note_text: noteText
 		})
 	
-		/*
-		res.json({
-			status: "Success!!!",
-			time_stamp: "0:42"
-		})
-		*/
-
 
 		console.log("Inserted a new timed shot entry with id:  ", results.insertId)
 	})
