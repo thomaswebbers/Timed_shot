@@ -88,7 +88,7 @@ download_button.addEventListener("click", () => {
 		var image = element.image64;
 		var a = document.createElement('a');
 		a.href = image;
-		a.download = image;
+		a.download = image; 
 		document.body.appendChild(a);
 		a.click();
 		document.body.removeChild(a);
