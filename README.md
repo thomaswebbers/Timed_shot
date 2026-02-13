@@ -1,6 +1,9 @@
 # Timed_shot
 The code base for the timedshot server and Firefox addon
 
+Timed shot is a utility that once installed allows a user create screenshots with a timestamp from youtube videos.
+
+Feel free to fork and modify this code to serve any and all of your time stamp screenshotting needs.
 
 These are the steps to setup the environment and run it on Mac
 
