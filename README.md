@@ -14,19 +14,24 @@ These are the steps to setup the environment and run it on Mac
     Setup credentials in sequel ace detailed in app.js
         	host: 'localhost',
 		    user: 'root',
-            passwd: INSERT PASS HERE
 		    database: 'timed_shots'
     Setup collumn names and datatypes
         time_stamp  VARCHAR
         note_text   TEXT
         image64     LONGTEXT
 
-3) Install node.js
+3) Create enviroment variables for:
+    TIMED_SHOT_DB_HOST
+    TIMED_SHOT_DB_NAME
+    TIMED_SHOT_DB_USER
 
-4) Run server:
+4) Install node.js
+    npm install dotenv
+
+5) Run server:
     node Timed_shot/Timed_shot_server/app.js
 
-5) Enable browser action
+6) Enable browser action
     about:debugging in browser
     This firefox (this will navigate to emporary extensions)
     Select manifest.json from Timed_shot_browser_action

@@ -4,6 +4,7 @@ const app = express()
 const morgan = require('morgan')
 const mysql = require('mysql2')
 const cors = require('cors')
+const dotenv = require('dotenv').config(); // This MUST be at the very top of the file
 
 app.use(express.json({limit: "16mb"}))
 
@@ -36,9 +37,9 @@ const timed_shots_database = "timed_shots"
 function getConnection() 
 {
 	return mysql.createConnection({
-		host: 'localhost',
-		user: 'root',
-		database: 'timed_shots'
+		host: process.env.TIMED_SHOT_DB_HOST,
+		user: process.env.TIMED_SHOT_DB_USER,
+		database: process.env.TIMED_SHOT_DB_NAME
 	})
 }
 
@@ -114,5 +115,6 @@ app.post("/timed_shot_create", (req, res) => {
 })
 
 app.listen(3003, () => {
+	console.log(process.env)
 	console.log("Timed shot app server is up and listening on 3003...")
 })

@@ -1,0 +1,35 @@
+# --- Security & Secrets ---
+# Never commit your environment variables or credentials
+.env
+.env.local
+.env.*
+
+# --- Node.js / Backend ---
+# Dependency directories (these are huge and shouldn't be in Git)
+node_modules/
+jspm_packages/
+
+# Logs and diagnostic reports
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs
+*.log
+
+# --- Browser Extension (Firefox) ---
+# Ignore build artifacts if you start using a bundler later
+dist/
+build/
+*.zip
+*.xpi
+
+# --- OS / IDE Specific ---
+# Mac-specific hidden files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDE settings (optional but recommended)
+.vscode/
+.idea/
+*.swp
